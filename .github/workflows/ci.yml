@@ -34,3 +34,15 @@ jobs:
 
       - name: Run tests
         run: pytest -v
+
+      - name: Install pytest-html
+        run: pip install pytest-html
+
+      - name: Run tests and generate HTML report
+        run: pytest --html=report.html --self-contained-html
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-report
+          path: report.html
