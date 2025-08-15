@@ -1,0 +1,13 @@
+import pytest, requests
+
+def test_single_post_structure(base_url):
+    r = requests.get(f"{base_url}/posts/1")
+    d = r.json()
+    assert d["id"] == 1
+    assert "title" in d and "body" in d
+
+@pytest.mark.parametrize("post_id", [1, 2, 3, 10])
+def test_multiple_posts(base_url, post_id):
+    r = requests.get(f"{base_url}/posts/{post_id}")
+    assert r.status_code == 200
+    assert r.json()["id"] == post_id
